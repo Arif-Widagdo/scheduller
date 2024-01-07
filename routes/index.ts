@@ -6,6 +6,22 @@ import { randomUUID } from 'crypto';
 
 const router = Router();
 
+type ResponseTestGet = { name: string; age: number };
+
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result: ResponseTestGet = {
+            name: 'dado',
+            age: 18,
+        };
+
+        res.status(200).send(responseProcessor(result, 'Redis cluster connected', true, ''));
+    } catch (error) {
+        console.error('Error connecting to Redis cluster:', error);
+        next(error);
+    }
+});
+
 // setInterval(() => {
 //     const message = { foo: Math.random() };
 //     // Publish to my-channel-1 or my-channel-2 randomly.
